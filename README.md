@@ -120,3 +120,29 @@ Please read the [`CONTRIBUTING.md`](CONTRIBUTING.md) for details on
 how to contribute to this project.
 
 Happy testing!
+
+
+
+
+➜  googletest-release-1.7.0 cmake -DBUILD_SHARED_LIBS=ON .
+➜  googletest-release-1.7.0 make
+➜  googletest-release-1.7.0 sudo cp -a include/gtest /usr/include
+➜  googletest-release-1.7.0 sudo cp -a libgtest_main.so libgtest.so /usr/lib/
+
+
+cd make 
+{
+
+
+TESTS = sample1_unittest sample2_unittest sample5_unittest
+
+sample5_unittest.o : $(USER_DIR)/sample5_unittest.cc \
+                     $(USER_DIR)/sample3-inl.h $(GTEST_HEADERS)
+        $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/sample5_unittest.cc 
+
+
+sample5_unittest :  sample5_unittest.o sample1.o gtest_main.a
+        $(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+}
+make
